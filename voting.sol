@@ -5,15 +5,15 @@ contract Voting {
     address public admin;
     mapping(uint256 => uint256) public votes;
 
+    // Constructor to set the admin when the contract is deployed
+    constructor() {
+        admin = msg.sender;
+    }
+
     // Modifier to restrict access to the admin
     modifier onlyAdmin() {
         require(msg.sender == admin, "Only admin can call this function");
         _;
-    }
-
-    // Constructor to set the admin when the contract is deployed
-    constructor() {
-        admin = msg.sender;
     }
 
     // Function to start a new election, only callable by the admin
