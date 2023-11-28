@@ -1,3 +1,4 @@
+
 # Building a Decentralized Voting Application with Celo Blockchain
 
 ## Table of Contents
@@ -16,7 +17,9 @@
     - [How to Contribute](#how-to-contribute)
     - [Local Development](#local-development)
 6. [License](#license)
+## Introduction
 
+Blockchain technology has the potential to revolutionize the way we vote. By using blockchain, we can create voting systems that are more transparent, secure, and accessible. This tutorial will guide you through the process of building a decentralized voting application on the Celo blockchain.
 
 
 ## Purpose:
