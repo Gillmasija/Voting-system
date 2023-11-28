@@ -8,8 +8,8 @@ contract Voting {
         uint256 voteCount;
     }
 
-    // Array to store candidate information
-    Candidate[] public candidates;
+    // Mapping to store candidate information
+    mapping(uint256 => Candidate) public candidates;
 
     // Mapping to track voter addresses and their vote status
     mapping(address => bool) public hasVoted;
@@ -20,37 +20,17 @@ contract Voting {
     // Event to be emitted when a vote is cast
     event VoteCast(address indexed voter, uint256 candidateId);
 
-    /**
-     * @dev Initiates a new election.
-     * Emits ElectionInitiated event.
-     * Developers should customize the logic inside this function
-     * based on their election initiation requirements.
-     */
-    function initiateElection() public {
-        // TODO: Add logic to initiate a new election
-        emit ElectionInitiated();
+    // Address of the authorized election administrator
+    address public electionAdministrator;
+
+    // Voting deadline timestamp
+    uint256 public votingDeadline;
+
+    // Modifier to restrict function access to the election administrator
+    modifier onlyElectionAdministrator() {
+        require(msg.sender == electionAdministrator, "Unauthorized access");
+        _;
     }
 
     /**
-     * @dev Allows voters to cast their votes for a candidate.
-     * @param _candidateId The ID of the candidate to vote for.
-     * Developers should ensure proper validation and security measures
-     * to prevent unauthorized voting.
-     */
-    function castVote(uint256 _candidateId) public {
-        // Ensure the candidate ID is within valid range
-        require(_candidateId < candidates.length, "Invalid candidate ID");
-        
-        // Ensure the voter has not already cast a vote
-        require(!hasVoted[msg.sender], "You have already voted");
-
-        // Update candidate vote count
-        candidates[_candidateId].voteCount++;
-
-        // Mark voter as having voted
-        hasVoted[msg.sender] = true;
-
-        // Emit the VoteCast event
-        emit VoteCast(msg.sender, _candidateId);
-    }
-}
+     * @dev Constructor to initialize the election administrator and voting deadline
